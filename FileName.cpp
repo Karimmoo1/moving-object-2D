@@ -13,6 +13,7 @@ float screenHeight = 600;
 
 float worldLeft = -10, worldRight = 10, worldTop = 10, worldBottom = -10;
 bool colorToggle = false;
+bool paused = false;
 
 void drawLantern() {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -76,18 +77,20 @@ void drawLantern() {
 }
 
 void update(int value) {
-    lanternX += dx;
-    lanternY += dy;
+    if (!paused) {
+        lanternX += dx;
+        lanternY += dy;
 
-    // Check for collision with borders
-    if (lanternX + 3 >= worldRight || lanternX - 3 <= worldLeft) {
-        dx *= -1;
-        colorToggle = !colorToggle;
-    }
+        // Check for collision with borders
+        if (lanternX + 3 >= worldRight || lanternX - 3 <= worldLeft) {
+            dx *= -1;
+            colorToggle = !colorToggle;
+        }
 
-    if (lanternY + 6 >= worldTop || lanternY - 6 <= worldBottom) {
-        dy *= -1;
-        colorToggle = !colorToggle;
+        if (lanternY + 6 >= worldTop || lanternY - 6 <= worldBottom) {
+            dy *= -1;
+            colorToggle = !colorToggle;
+        }
     }
 
     glutPostRedisplay();
@@ -118,6 +121,27 @@ void reshape(int w, int h) {
     glMatrixMode(GL_MODELVIEW);
 }
 
+void mouse(int button, int state, int x, int y) {
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        paused = !paused;
+    }
+}
+
+void specialKeys(int key, int x, int y) {
+    switch (key) {
+    case GLUT_KEY_UP:
+        dx *= 1.2f;
+        dy *= 1.2f;
+        break;
+    case GLUT_KEY_DOWN:
+        dx *= 0.8f;
+        dy *= 0.8f;
+        break;
+    }
+
+
+}
+
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
@@ -130,6 +154,8 @@ int main(int argc, char** argv) {
     glutDisplayFunc(drawLantern);
     glutReshapeFunc(reshape);
     glutTimerFunc(0, update, 0);
+    glutMouseFunc(mouse);
+    glutSpecialFunc(specialKeys);
 
     glClearColor(0.5, 0.4, 1, 0);
     glutMainLoop();
