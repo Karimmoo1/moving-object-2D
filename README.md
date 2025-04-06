@@ -18,7 +18,7 @@ A simple 2D computer graphics project built using **C++**, **OpenGL**, and **GLU
 - Visual Studio
 
 ## 📸 Screenshot
-> _(Add your GIF/screenshot later here)_
+> _(https://github.com/Karimmoo1/moving-object-2D/blob/main/example.jpg))_
 
 ## 📄 License
 Free to use for learning and non-commercial use.
