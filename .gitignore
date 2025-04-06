@@ -1,0 +1,17 @@
+.vs/
+*.exe
+*.obj
+*.pdb
+*.sdf
+*.ipch
+*.user
+*.aps
+*.ncb
+*.log
+*.suo
+*.vcxproj.user
+*.DS_Store
+
+
+
+
